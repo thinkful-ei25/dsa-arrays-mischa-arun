@@ -6,32 +6,31 @@
 // Input:[1, 3, 6, 8, 11] and [2, 3, 5, 8, 9, 10]
 // Output:[1, 2, 3, 3, 5, 6, 8, 8, 9, 10, 11]
 
-// iterate through each array simultaneously check which one is smaller, 
+// iterate through each array simultaneously check which one is smaller,
 //push  that one into output first, then other
-//increment index repeat until reach end of both arrays 
-
+//increment index repeat until reach end of both arrays
 
 //arrA = [5] arrB = [3,4,5,6]
-function mergeArrays(arrA, arrB){
+function mergeArrays(arrA, arrB) {
   let indexA = 0;
   let indexB = 0;
   let output = [];
-  while(indexA < arrA.length || indexB < arrB.length){
+  while (indexA < arrA.length || indexB < arrB.length) {
     //check if arrA[indexA] < arrB [indexB]
 
-    //make sure we have items in each ---- check if items in both arrays 
-    if(indexA < arrA.length && indexB < arrB.length){
-      if(arrA[indexA] < arrB[indexB]){
+    //make sure we have items in each ---- check if items in both arrays
+    if (indexA < arrA.length && indexB < arrB.length) {
+      if (arrA[indexA] < arrB[indexB]) {
         output.push(arrA[indexA]);
         indexA += 1;
-      }else{
+      } else {
         output.push(arrB[indexB]);
         indexB += 1;
       }
-    }else if(indexA < arrA.length){
+    } else if (indexA < arrA.length) {
       output = output.concat(arrA.slice(indexA));
       indexA = arrA.length;
-    }else{
+    } else {
       output = output.concat(arrB.slice(indexB));
       indexB = arrB.length;
     }
@@ -39,12 +38,11 @@ function mergeArrays(arrA, arrB){
   return output;
 }
 
-function testMergeArrays(){
-  console.log(mergeArrays([5], [2,3,4,5,6]));
-  console.log(mergeArrays([2,3,4,5,6], [5]));
-  console.log(mergeArrays([1,2,6,8,11], [2,3,5,8,9,10]));
+function testMergeArrays() {
+  console.log(mergeArrays([5], [2, 3, 4, 5, 6]));
+  console.log(mergeArrays([2, 3, 4, 5, 6], [5]));
+  console.log(mergeArrays([1, 2, 6, 8, 11], [2, 3, 5, 8, 9, 10]));
 }
-testMergeArrays();
 
 //runtime ==> O(a+b) == O(n)
 
@@ -160,3 +158,61 @@ function testMaxSum() {
   console.log(maxSum([-4, 4, 6, -3, 5, -2, 1]) === 12);
   console.log(maxSum([-4, 4, 6, -8, 5, 5, -2, 1]) === 12);
 }
+
+/*
+Remove Characters
+------------------
+Write an algorithm that deletes given characters from a string. For example,
+given a string of "Battle of the Vowels: Hawaii vs. Grozny" and characters to
+be removed are "aeiou", the algorithm should transform the original string to
+"Bttl f th Vwls: Hw vs. Grzny". Do not use Javascript's filter, split, or
+join methods.
+
+Input:'Battle of the Vowels: Hawaii vs. Grozny', 'aeiou'
+Output: 'Bttl f th Vwls: Hw vs. Grzny'
+*/
+
+function removeCharacters(string, filterString) {
+  let output = '';
+
+  //Loop through string, check if string[i] is included in the filter string
+  //   If yes: continue
+  //   If no: add character to output string
+
+  // To check against filter:
+  //   (1) inner loop over filter string
+  //   (2) .indexOf but that is also O(F) where F = | filter |
+  //   (3) .includes " " " " " " "
+  // We could store the filter in an object, which should have O(1) lookup time
+  // `in`
+
+  const filter = {};
+  for (let i = 0; i < filterString.length; i += 1) {
+    filter[filterString[i]] = true;
+  }
+
+  for (let i = 0; i < string.length; i += 1) {
+    if (!filter[string[i]]) {
+      output += string[i];
+    }
+  }
+  return output;
+}
+
+// Runtime: O(S + F) => O(n)
+
+function testRemoveCharacters() {
+  console.log(
+    removeCharacters('Battle of the Vowels: Hawaii vs. Grozny', 'aeiou') ===
+      'Bttl f th Vwls: Hw vs. Grzny'
+  );
+  console.log(
+    removeCharacters('The quick brown fox jumped over the lazy dog', ' T') ===
+      'hequickbrownfoxjumpedoverthelazydog'
+  );
+  console.log(
+    removeCharacters('The quick brown fox jumped over the lazy dog', '') ===
+      'The quick brown fox jumped over the lazy dog'
+  );
+}
+testRemoveCharacters();
