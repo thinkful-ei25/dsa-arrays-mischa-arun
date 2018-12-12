@@ -1,5 +1,53 @@
 'use strict';
 
+// Merge Arrays
+// Imagine you have two arrays which have already been sorted. Write an algorithm to merge the two arrays into a single array, which should also be sorted.
+
+// Input:[1, 3, 6, 8, 11] and [2, 3, 5, 8, 9, 10]
+// Output:[1, 2, 3, 3, 5, 6, 8, 8, 9, 10, 11]
+
+// iterate through each array simultaneously check which one is smaller, 
+//push  that one into output first, then other
+//increment index repeat until reach end of both arrays 
+
+
+//arrA = [5] arrB = [3,4,5,6]
+function mergeArrays(arrA, arrB){
+  let indexA = 0;
+  let indexB = 0;
+  let output = [];
+  while(indexA < arrA.length || indexB < arrB.length){
+    //check if arrA[indexA] < arrB [indexB]
+
+    //make sure we have items in each ---- check if items in both arrays 
+    if(indexA < arrA.length && indexB < arrB.length){
+      if(arrA[indexA] < arrB[indexB]){
+        output.push(arrA[indexA]);
+        indexA += 1;
+      }else{
+        output.push(arrB[indexB]);
+        indexB += 1;
+      }
+    }else if(indexA < arrA.length){
+      output = output.concat(arrA.slice(indexA));
+      indexA = arrA.length;
+    }else{
+      output = output.concat(arrB.slice(indexB));
+      indexB = arrB.length;
+    }
+  }
+  return output;
+}
+
+function testMergeArrays(){
+  console.log(mergeArrays([5], [2,3,4,5,6]));
+  console.log(mergeArrays([2,3,4,5,6], [5]));
+  console.log(mergeArrays([1,2,6,8,11], [2,3,5,8,9,10]));
+}
+testMergeArrays();
+
+//runtime ==> O(a+b) == O(n)
+
 // Filtering an array
 // Imagine you have an array of numbers.
 //Write an algorithm to remove all numbers less than five from the array.
