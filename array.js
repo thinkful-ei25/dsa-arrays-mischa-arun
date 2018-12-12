@@ -63,25 +63,46 @@ class Array {
     this.length += 1;
   }
 
-  remove(index) {
+  remove(index, size=1) {
     // Copy everything from index + 1 through the end, to index
     // 0 1 2 3 4 5 6
     // remove 3
     // length - index + 1
-    memory.copy(this.ptr + index, this.ptr + index + 1, this.length - index + 1);
-    this.length -= 1;
+    memory.copy(this.ptr + index, this.ptr + index + size, this.length - size - index);
+    this.length -= size;
+
+    //if size > greater 1
   }
 }
 
 function main() {
   Array.SIZE_RATIO = 3;
   //create an instance of the array class
-  let arr = new Array();
+  let arr = new Array(0);
 
   //add an item to the array
-  arr.push(3);
 
+  //resize --> allocates more memory 
+  //-----------copies over existing array to new memory location (new ptr address)
+  arr.push(3);
+  arr.push(5);
+  arr.push(15);
+  arr.push(19);
+  arr.push(45);
+  arr.push(10);
+  arr.pop();
+  arr.pop();
+  arr.pop();
+  //length === 3, capacity === 12, ptr === 3
+  // capacity is updated to 12 on line 90, when our array capacity and length are equivalent
+  // ----- we call resize which allocates 12 (3+1 * SIZE_RATIO) new blocks starting right after our original blocks (which is address 3)
+  
+  arr.remove(0,arr.length);
   console.log(arr);
+  arr.push('tauhida');
+  //data structure restricted to floats --> converting our string to NaN (which is a number)
+  console.log(arr.get(0)); 
+
 }
 
 main();
