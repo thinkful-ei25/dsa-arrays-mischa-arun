@@ -332,3 +332,41 @@ function testZeroingMatrix() {
 
   console.log(zeroingMatrix([[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 0]]));
 }
+
+// String rotation
+// Given two strings, str1 and str2, write a program that checks if str2 is a rotation of str1.
+
+// Input: amazon, azonma
+// Output: False
+// Input: amazon, azonam
+// Output: true
+
+
+function isRotation(str, candidate){
+  
+  for(let candidateI = 0; candidateI<candidate.length; candidateI+=1){
+    // for every position read through the entire string, if non-match break
+    let i;
+    for(i = 0; i < str.length; i+=1){
+      const stringCharacter = str[i];
+      const candidateCharacter = candidate[(candidateI + i) % candidate.length];
+      if(stringCharacter !== candidateCharacter){
+        break;
+      }
+    }
+    if(i === str.length){
+      return true;
+    }
+  }
+  return false;
+}
+//runtime ==> O(n^2)
+//        
+
+function testisRotation(){
+  console.log(isRotation('true', 'ruet'));
+  console.log(isRotation('true', 'rue'));
+  console.log(isRotation('amazon', 'azonma'));
+  console.log(isRotation('amazon', 'azonam'));
+}
+testisRotation();
