@@ -216,19 +216,17 @@ function testRemoveCharacters() {
   );
 }
 
-
-
 //naive --> for each index then itereate through entire array again multiply product *= array[i] (if i !== index)
 //optimized version --> find product of entire array then itereate through array again and ddivide by value at index
 
-function products(arr){
+function products(arr) {
   const totalProduct = arr.reduce((acc, value) => acc * value);
   return arr.map((val, idx) => {
     //brute force/naive case if we're dividing by 0
-    if(val === 0){
+    if (val === 0) {
       let product = 1;
-      for(let i = 0; i < arr.length; i++){
-        if(i !== idx){
+      for (let i = 0; i < arr.length; i++) {
+        if (i !== idx) {
           product *= arr[i];
         }
       }
@@ -238,13 +236,99 @@ function products(arr){
   });
 }
 
-function testProducts(){
+function testProducts() {
   console.log(products([1, 3, 9, 4])); // === [108, 36, 12, 27]
-  console.log(products([3,9,7,0])); // [0, 0 ,0, 189]
+  console.log(products([3, 9, 7, 0])); // [0, 0 ,0, 189]
 }
-testProducts();
-// runtime => 
+// runtime =>
 //        ==> actual runtime is n+n*z
-//        ==> worst case, if every item in array is 0 brute force every indes -> is o(n^2) 
+//        ==> worst case, if every item in array is 0 brute force every indes -> is o(n^2)
 //        ==> best/avg case -> O(n)
-//        
+//
+
+/*
+2D Array
+-------------
+Write an algorithm which searches through a 2D array, and whenever it finds a
+zero should set the entire row and column to zero.
+
+Input:
+[
+  [1,0,1,1,0],
+  [0,1,1,1,0],
+  [1,1,1,1,1],
+  [1,0,1,1,1],
+  [1,1,1,1,1]
+];
+Output:
+[[0,0,0,0,0],
+ [0,0,0,0,0],
+ [0,0,1,1,0],
+ [0,0,0,0,0],
+ [0,0,1,1,0]];
+*/
+
+/*
+Output array that we are slowly filling up
+
+hash/smaller array
+(0, 1) => column[1] = true; row[0] = true;
+*/
+
+// Assumption: square matrix
+function zeroingMatrix(matrix) {
+  const zeroRow = {};
+  const zeroColumn = {};
+
+  for (let row = 0; row < matrix.length; row += 1) {
+    for (let column = 0; column < matrix[row].length; column += 1) {
+      const element = matrix[row][column];
+      if (element === 0) {
+        zeroRow[row] = true;
+        zeroColumn[column] = true;
+      }
+    }
+  }
+
+  const outputMatrix = [];
+
+  for (let row = 0; row < matrix.length; row += 1) {
+    if (zeroRow[row]) {
+      outputMatrix.push(new Array(matrix[row].length).fill(0));
+    } else {
+      const newRow = [];
+
+      for (let column = 0; column < matrix[row].length; column += 1) {
+        const element = matrix[row][column];
+        if (zeroColumn[column]) {
+          newRow.push(0);
+        } else {
+          newRow.push(element);
+        }
+      }
+
+      outputMatrix.push(newRow);
+    }
+  }
+
+  return outputMatrix;
+}
+
+/*
+Runtime:
+  O(n) (where n is the number of elements in the matrix)
+*/
+
+function testZeroingMatrix() {
+  console.log(
+    zeroingMatrix([
+      [1, 0, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [1, 1, 1, 1, 1],
+      [1, 0, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+    ])
+  );
+
+  console.log(zeroingMatrix([[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 0]]));
+}
