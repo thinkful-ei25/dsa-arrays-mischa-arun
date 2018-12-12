@@ -20,7 +20,7 @@ class Array {
 
   push(value) {
     if (this.capacity - this.length <= 0) {
-      this.resize(this.capacity * 2);
+      this.resize(this.capacity + 10);
     }
 
     if (this.capacity - this.length > 0) {
@@ -46,19 +46,46 @@ class Array {
     return val;
   }
 
-  insert() {}
+  insert(index, value) {
+    if (this.capacity - this.length <= 0) {
+      this.resize(this.capacity + 10);
+    }
 
-  revove() {}
+    // Move everything from index over by one
+    // 0 1 2 3 4 5
+    // length: 6
+    // index: 4
+    // copy: 2
+    // insert(2, 22)
+    // 0 1 22 2 3 4 5
+    memory.copy(this.ptr + index + 1, this.ptr + index, this.length - index);
+    memory.set(this.ptr + index, value);
+    this.length += 1;
+  }
+
+  remove(index) {
+    // Copy everything from index + 1 through the end, to index
+    // 0 1 2 3 4 5 6
+    // remove 3
+    // length - index + 1
+    memory.copy(this.ptr + index, this.ptr + index + 1, this.length - index + 1);
+    this.length -= 1;
+  }
 }
 
 function main() {
-  const arr = new Array();
+  const arr = new Array(0);
   arr.push(25);
   arr.push(50);
+  arr.insert(1, 22);
   console.log(arr.get(0));
   console.log(arr.get(1));
-  console.log(arr.pop());
-  arr.get(1);
+  console.log(arr.get(2));
+  console.log('remove');
+  arr.remove(1);
+  console.log(arr.get(0));
+  console.log(arr.get(1));
+  console.log(arr.get(2));
 }
 
 main();
