@@ -215,4 +215,36 @@ function testRemoveCharacters() {
       'The quick brown fox jumped over the lazy dog'
   );
 }
-testRemoveCharacters();
+
+
+
+//naive --> for each index then itereate through entire array again multiply product *= array[i] (if i !== index)
+//optimized version --> find product of entire array then itereate through array again and ddivide by value at index
+
+function products(arr){
+  const totalProduct = arr.reduce((acc, value) => acc * value);
+  return arr.map((val, idx) => {
+    //brute force/naive case if we're dividing by 0
+    if(val === 0){
+      let product = 1;
+      for(let i = 0; i < arr.length; i++){
+        if(i !== idx){
+          product *= arr[i];
+        }
+      }
+      return product;
+    }
+    return totalProduct / val;
+  });
+}
+
+function testProducts(){
+  console.log(products([1, 3, 9, 4])); // === [108, 36, 12, 27]
+  console.log(products([3,9,7,0])); // [0, 0 ,0, 189]
+}
+testProducts();
+// runtime => 
+//        ==> actual runtime is n+n*z
+//        ==> worst case, if every item in array is 0 brute force every indes -> is o(n^2) 
+//        ==> best/avg case -> O(n)
+//        
