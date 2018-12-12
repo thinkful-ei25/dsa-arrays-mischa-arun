@@ -1,5 +1,26 @@
 'use strict';
 
+// Filtering an array
+// Imagine you have an array of numbers. 
+//Write an algorithm to remove all numbers less than five from the array. 
+//Don't use array's built-in .filter method here; write the algorithm from scratch.
+function filter(arr){
+  const result = [];
+  //iterate through arr if num > = 5 result.push(num) return result
+  arr.forEach((item) => {
+    if(item >= 5){
+      result.push(item);
+    }
+  });
+  return result;
+}
+
+function testFilter(){
+  console.log(filter([-4, 20, 32, 2, 0, 5])); //== 20,32,5
+  console.log(filter([1,2,3,4])); // == empty
+}
+// testFilter();
+
 // URLifify
 // A common mistake users make when they type in an URL is to put spaces between
 // words or letters. One solution that developers can use to solve this problem
