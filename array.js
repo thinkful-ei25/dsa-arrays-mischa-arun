@@ -20,7 +20,7 @@ class Array {
 
   push(value) {
     if (this.capacity - this.length <= 0) {
-      this.resize(this.capacity + 10);
+      this.resize((this.capacity + 1) * Array.SIZE_RATIO);
     }
 
     if (this.capacity - this.length > 0) {
@@ -48,7 +48,7 @@ class Array {
 
   insert(index, value) {
     if (this.capacity - this.length <= 0) {
-      this.resize(this.capacity + 10);
+      this.resize((this.capacity + 1) * Array.SIZE_RATIO);
     }
 
     // Move everything from index over by one
@@ -74,18 +74,14 @@ class Array {
 }
 
 function main() {
-  const arr = new Array(0);
-  arr.push(25);
-  arr.push(50);
-  arr.insert(1, 22);
-  console.log(arr.get(0));
-  console.log(arr.get(1));
-  console.log(arr.get(2));
-  console.log('remove');
-  arr.remove(1);
-  console.log(arr.get(0));
-  console.log(arr.get(1));
-  console.log(arr.get(2));
+  Array.SIZE_RATIO = 3;
+  //create an instance of the array class
+  let arr = new Array();
+
+  //add an item to the array
+  arr.push(3);
+
+  console.log(arr);
 }
 
 main();
