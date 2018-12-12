@@ -360,7 +360,7 @@ function isRotation(str, candidate){
   }
   return false;
 }
-//runtime ==> O(n^2)
+//runtime ==> O(n^2) without using a better runtime substring library function
 //        
 
 function testisRotation(){
