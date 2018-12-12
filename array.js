@@ -36,7 +36,15 @@ class Array {
     return memory.get(this.ptr + index);
   }
 
-  pop() {}
+  pop() {
+    if (this.length === 0) {
+      return undefined;
+    }
+
+    this.length -= 1;
+    const val = memory.get(this.ptr + this.length);
+    return val;
+  }
 
   insert() {}
 
@@ -49,6 +57,8 @@ function main() {
   arr.push(50);
   console.log(arr.get(0));
   console.log(arr.get(1));
+  console.log(arr.pop());
+  arr.get(1);
 }
 
 main();
